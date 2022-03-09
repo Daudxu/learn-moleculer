@@ -25,13 +25,15 @@ module.exports = {
       "_id",
       "name",
       "quantity",
-      "price"
+      "age",
+      "notec"
     ],
 
     // Validator for the `create` & `insert` actions.
     entityValidator: {
       name: "string|min:3",
-      price: "number|positive"
+      age: "number|positive",
+      notec: "string"
     }
   },
 
