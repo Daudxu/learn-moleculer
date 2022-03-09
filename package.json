@@ -1,0 +1,44 @@
+{
+  "name": "learn-moleculer",
+  "version": "1.0.0",
+  "description": "My Moleculer-based microservices project",
+  "scripts": {
+    "dev": "moleculer-runner --repl --hot services/**/*.service.js",
+    "start": "moleculer-runner",
+    "cli": "moleculer connect Redis",
+    "ci": "jest --watch",
+    "test": "jest --coverage",
+    "lint": "eslint services"
+  },
+  "keywords": [
+    "microservices",
+    "moleculer"
+  ],
+  "author": "",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "jest": "^27.1.0",
+    "jest-cli": "^27.1.0",
+    "moleculer-repl": "^0.7.0"
+  },
+  "dependencies": {
+    "ioredis": "^4.27.9",
+    "moleculer": "^0.14.16",
+    "moleculer-db": "^0.8.17",
+    "moleculer-db-adapter-mongo": "^0.4.14",
+    "moleculer-db-adapter-mongoose": "^0.8.12",
+    "moleculer-web": "^0.10.2",
+    "mongoose": "^5.13.14"
+  },
+  "engines": {
+    "node": ">= 12.x.x"
+  },
+  "jest": {
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "rootDir": "./services",
+    "roots": [
+      "../test"
+    ]
+  }
+}
