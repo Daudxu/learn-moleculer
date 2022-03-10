@@ -568,10 +568,10 @@
 
           requests: {
             test: [
-              { id: "hello", action: "test.hello", rest: "/api/test/hello", response: null, status: null, duration: null },
+              { id: "hello", action: "v1.test.hello", rest: "/api/v1/test/hello", response: null, status: null, duration: null },
 
               {
-                id: "welcome", action: "test.welcome", rest: "/api/test/welcome", fields: [
+                id: "welcome", action: "v1.test.welcome", rest: "/api/v1/test/welcome", fields: [
                   { field: "name", label: "Name", type: "text", paramType: "param", model: "welcomeName" }
                 ], response: null, status: null, duration: null
               }

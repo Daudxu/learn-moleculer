@@ -30,7 +30,7 @@ module.exports = {
   // Namespace of nodes to segment your nodes on the same network.
   namespace: "learn-moleculer",
   // Unique node identifier. Must be unique in a namespace.
-  nodeID: null,
+  nodeID: '001',
   // Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
   metadata: {},
 
