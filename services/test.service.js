@@ -14,7 +14,7 @@ module.exports = {
 
   version: 1,
 
-  mixins: [DbMixin("users")],
+  mixins: [DbMixin("test")],
 
 
   /**
@@ -33,21 +33,13 @@ module.exports = {
    * Actions
    */
   actions: {
-    // add () {
-    //   return 1;
-    // },
-
-    // sub (ctx) {
-    //   return Number(ctx.params.a) - Number(ctx.params.b);
-    // },
-
     hello: {
       rest: {
         method: "GET",
         path: "/hello"
       },
       async handler (ctx) {
-        console.log('ctx', test.sa())
+        console.log('ctx', this.broker)
         return ctx.params;
       }
     },
@@ -68,14 +60,32 @@ module.exports = {
    * Events
    */
   events: {
-
+    "user.created" (ctx) {
+      this.logger.info("User created:", ctx.params);
+      // Do something
+    },
+    "user.*" (ctx) {
+      console.log("Payload:", ctx.params);
+      console.log("Sender:", ctx.nodeID);
+      console.log("Metadata:", ctx.meta);
+      console.log("The called event name:", ctx.eventName);
+    }
   },
 
   /**
    * Methods
    */
   methods: {
-
+    sendMail () {
+      this.broker.call("test.create", {
+        username: "john",
+        name: "John Doe",
+        status: 1
+      })
+      // return new Promise((resolve) => {
+      //   resolve(12312312)
+      // });
+    }
   },
 
   /**

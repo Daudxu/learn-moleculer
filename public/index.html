@@ -568,13 +568,36 @@
 
           requests: {
             test: [
-              { id: "hello", action: "v1.test.hello", rest: "/api/v1/test/hello", response: null, status: null, duration: null },
-
+              { id: "list", action: " 获取列表：[v1.test.list]", rest: "/api/v1/test", response: null, status: null, duration: null },
               {
-                id: "welcome", action: "v1.test.welcome", rest: "/api/v1/test/welcome", fields: [
-                  { field: "name", label: "Name", type: "text", paramType: "param", model: "welcomeName" }
+                id: "get", action: "获取某个ID数据：[v1.test.get]", rest: "/api/v1/test/:id", method: "GET", fields: [
+                  { field: "id", label: "ID", type: "text", paramType: "url", model: "productID" }
                 ], response: null, status: null, duration: null
-              }
+              },
+              {
+                id: "create", action: "新增一条数据：[v1.test.create]", rest: "/api/v1/test", method: "POST", fields: [
+                  { field: "name", label: "姓名", type: "text", paramType: "body", model: "productName" },
+                  { field: "age", label: "年龄", type: "number", paramType: "body" },
+                  { field: "notec", label: "备注", type: "text", paramType: "body" },
+                ], response: null, status: null, duration: null, afterResponse: response => this.fields.productID = response._id
+              },
+              {
+                id: "delete", action: "删除一条数据：[v1.test.delete]", rest: "/api/v1/test/:id", method: "DELETE", fields: [
+                  { field: "id", label: "ID", type: "text", paramType: "url", model: "productID" }
+                ], response: null, status: null, duration: null
+              },
+              {
+                id: "update", action: "数据更新 [v1.users.update]", rest: "/api/v1/test/:id", method: "PUT", fields: [
+                  { field: "id", label: "ID", type: "text", paramType: "url", model: "productID" },
+                  { field: "name", label: "Name", type: "text", paramType: "body", model: "productName" },
+                  { field: "age", label: "Price", type: "number", paramType: "body", model: "productPrice" },
+                ], response: null, status: null, duration: null
+              },
+              {
+                id: "find", action: "[v1.test.get]", rest: "/api/v1/test/find", method: "GET", fields: [
+                  { field: "id", label: "ID", type: "text", paramType: "url", model: "productID" }
+                ], response: null, status: null, duration: null
+              },
             ],
             users: [
               { id: "list", action: "users.list", rest: "/api/users/", response: null, status: null, duration: null, afterResponse: response => !this.fields.productID && (this.fields.productID = response.rows[0]._id) },
@@ -621,6 +644,11 @@
                 ], response: null, status: null, duration: null
               },
 
+              {
+                id: "delete", action: "users.delete", rest: "/api/users/:id", method: "DELETE", fields: [
+                  { field: "id", label: "ID", type: "text", paramType: "url", model: "productID" }
+                ], response: null, status: null, duration: null
+              },
             ],
             goods: [
               { id: "list", action: "goods.list", rest: "/api/goods/", response: null, status: null, duration: null, afterResponse: response => !this.fields.productID && (this.fields.productID = response.rows[0]._id) },
