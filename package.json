@@ -22,6 +22,8 @@
     "moleculer-repl": "^0.7.0"
   },
   "dependencies": {
+    "audit": "^0.0.6",
+    "fix": "^0.0.3",
     "ioredis": "^4.27.9",
     "moleculer": "^0.14.16",
     "moleculer-db": "^0.8.17",
@@ -29,7 +31,10 @@
     "moleculer-db-adapter-mongoose": "^0.8.12",
     "moleculer-web": "^0.10.2",
     "moleculer-web-swagger": "^0.0.4",
-    "mongoose": "^5.13.14"
+    "mongoose": "^5.13.14",
+    "request": "^2.88.2",
+    "ssl-root-cas": "^1.3.1",
+    "tunnel": "^0.0.6"
   },
   "engines": {
     "node": ">= 12.x.x"

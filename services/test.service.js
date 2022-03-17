@@ -3,6 +3,13 @@
 
 const DbMixin = require("../mixins/db.mixin");
 const test = require("../utils/test");
+// const https = require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create();
+const request = require('request');
+// const axios = require('axios');
+// const tunnel = require('tunnel')
+// const Qs = require("qs");
+// const fs = require("fs");
+// const path = require("path");
 
 
 /**
@@ -33,14 +40,29 @@ module.exports = {
    * Actions
    */
   actions: {
+    collectionsList: {
+      rest: {
+        method: "GET",
+        path: "/collectionsList"
+      },
+      cache: true,
+      async handler (ctx) {
+        return await this.getList(ctx);
+      }
+    },
+
     hello: {
       rest: {
         method: "GET",
         path: "/hello"
       },
       async handler (ctx) {
-        console.log('ctx', this.broker)
-        return ctx.params;
+        console.log(this.adapter.broker.call("test.create", {
+          username: "john",
+          name: "John Doe",
+          status: 1
+        }))
+
       }
     },
 
@@ -76,6 +98,14 @@ module.exports = {
    * Methods
    */
   methods: {
+    // 插入多条数据
+    async seedDB () {
+      await this.adapter.insertMany([
+        { name: "Samsung Galaxy S10 Plus", quantity: 10, price: 704 },
+        { name: "iPhone 11 Pro", quantity: 25, price: 999 },
+        { name: "Huawei P30 Pro", quantity: 15, price: 679 },
+      ]);
+    },
     sendMail () {
       this.broker.call("test.create", {
         username: "john",
@@ -85,6 +115,20 @@ module.exports = {
       // return new Promise((resolve) => {
       //   resolve(12312312)
       // });
+    },
+    async getList () {
+      return await new Promise((resolve, reject) => {
+        (async () => {
+          let url = `https://api.digination.xyz/v2/collections`;
+          request.get({ url: url, rejectUnauthorized: false }, function (err, response, body) {
+            resolve(JSON.parse(body))
+          })
+        })().catch((e) => {
+          reject("error:", e)
+        });
+      });
+
+      // return sa
     }
   },
 
