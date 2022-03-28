@@ -23,7 +23,6 @@ module.exports = {
 
   mixins: [DbMixin("test")],
 
-
   /**
    * Settings
    */
@@ -40,6 +39,7 @@ module.exports = {
    * Actions
    */
   actions: {
+    // 请求一个外部API
     collectionsList: {
       rest: {
         method: "GET",
@@ -48,6 +48,18 @@ module.exports = {
       cache: true,
       async handler (ctx) {
         return await this.getList(ctx);
+      }
+    },
+
+    // 添加一条用户数据
+    addUser: {
+      rest: {
+        method: "GET",
+        path: "/addUser"
+      },
+      cache: true,
+      async handler (ctx) {
+        return await this.addUser(ctx);
       }
     },
 
@@ -82,30 +94,36 @@ module.exports = {
    * Events
    */
   events: {
-    "user.created" (ctx) {
-      this.logger.info("User created:", ctx.params);
-      // Do something
-    },
-    "user.*" (ctx) {
-      console.log("Payload:", ctx.params);
-      console.log("Sender:", ctx.nodeID);
-      console.log("Metadata:", ctx.meta);
-      console.log("The called event name:", ctx.eventName);
-    }
+    // "user.created" (ctx) {
+    //   this.logger.info("User created:", ctx.params);
+    //   // Do something
+    // },
+    // "user.*" (ctx) {
+    //   console.log("Payload:", ctx.params);
+    //   console.log("Sender:", ctx.nodeID);
+    //   console.log("Metadata:", ctx.meta);
+    //   console.log("The called event name:", ctx.eventName);
+    // }
   },
 
   /**
    * Methods
    */
   methods: {
-    // 插入多条数据
-    async seedDB () {
+    // 插入一条数据
+    async addUser () {
       await this.adapter.insertMany([
-        { name: "Samsung Galaxy S10 Plus", quantity: 10, price: 704 },
-        { name: "iPhone 11 Pro", quantity: 25, price: 999 },
-        { name: "Huawei P30 Pro", quantity: 15, price: 679 },
+        { name: "张三", sax: "男", age: "18" }
       ]);
     },
+    // 插入多条数据
+    // async seedDB () {
+    //   await this.adapter.insertMany([
+    //     { name: "Samsung Galaxy S10 Plus", quantity: 10, price: 704 },
+    //     { name: "iPhone 11 Pro", quantity: 25, price: 999 },
+    //     { name: "Huawei P30 Pro", quantity: 15, price: 679 },
+    //   ]);
+    // },
     sendMail () {
       this.broker.call("test.create", {
         username: "john",
@@ -121,6 +139,8 @@ module.exports = {
         (async () => {
           let url = `https://api.digination.xyz/v2/collections`;
           request.get({ url: url, rejectUnauthorized: false }, function (err, response, body) {
+            // console.log(response)
+            // console.log(err)
             resolve(JSON.parse(body))
           })
         })().catch((e) => {
